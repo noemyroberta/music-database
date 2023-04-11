@@ -52,3 +52,17 @@ class Neo4jConnection:
             query = "CREATE (:Song {id: '%s', name: '%s', album: '%s', duration: '%s', lyrics: '%s'})" % (
                 song[0], song[1], song[2], song[3], song[4])
             self.session.run(query)
+
+    def get_graph_relationships(self, album_artists):
+        self.session.run("MATCH (s:Song), (a:Album{id: s.album}) CREATE (s)-[:IN_ALBUM]->(a);")
+        self.session.run("MATCH (a:Album), (ar:Artist{id: a.artist}) CREATE (a)-[:IS_FROM]->(ar);")
+        self.session.run("MATCH (ar:Artist), (a:Album{artist: ar.id}) CREATE (ar)-[:IS_SINGER]->(a);")
+        self.session.run("MATCH (a:Album), (g:Genre{id: a.genre}) CREATE (a)-[:HAS_GENRE]->(g);")
+
+        if album_artists:
+            for alb in album_artists:
+                self.session.run(
+                    "MATCH (ar:Artist), (a:Album) "
+                    "WHERE a.id = '%s' AND ar.id = '%s' " % (alb[0], alb[1]) +
+                    "CREATE (ar)-[:IS_SINGER]->(a)"
+                )

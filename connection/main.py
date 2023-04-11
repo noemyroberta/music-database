@@ -12,6 +12,7 @@ artists = db.get_all('artists')
 albums = db.get_all('albums')
 songs = db.get_all('songs')
 genres = db.get_all('genres')
+alb_artists = db.get_all('album_artists')
 
 neo4j.delete_current_graph()
 neo4j.get_artists_nodes(artists)
@@ -19,6 +20,7 @@ neo4j.get_albums_nodes(albums)
 neo4j.get_genres_nodes(genres)
 neo4j.get_songs_nodes(songs)
 neo4j.show_graph()
+neo4j.get_graph_relationships(alb_artists)
 
 
 
