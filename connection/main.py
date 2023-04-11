@@ -18,6 +18,7 @@ neo4j.get_artists_nodes(artists)
 neo4j.get_albums_nodes(albums)
 neo4j.get_genres_nodes(genres)
 neo4j.get_songs_nodes(songs)
+neo4j.show_graph()
 
 
 

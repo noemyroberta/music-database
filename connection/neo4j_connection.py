@@ -17,6 +17,9 @@ class Neo4jConnection:
         self.session.run("MATCH (n) DETACH DELETE n;")
         self.delete_graph_constraints()
 
+    def show_graph(self):
+        self.session.run("MATCH (n) RETURN n;")
+
     def set_graph_constraints(self):
         self.session.run("CREATE CONSTRAINT ON (g:Genre) ASSERT g.name IS UNIQUE")
         self.session.run("CREATE CONSTRAINT ON (a:Album) ASSERT a.id IS UNIQUE")
